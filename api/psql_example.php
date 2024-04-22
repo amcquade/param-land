@@ -1,26 +1,42 @@
 <?php
 
-echo 'hello friend !';
+echo 'hello friend ! here are results from postgres :) ';
+$host        = "host=database";
+$dbname      = "dbname=database";
+$credentials = "user=postgres";
+$connectionStr = "$host $dbname $credentials";
 
 // see lando file for creds
-$dbconn = pg_connect("host=database dbname=database user=postgres")
+$dbconn = pg_connect($connectionStr)
     or die('Could not connect: ' . pg_last_error());
 
 // Performing SQL query
-$query = "SELECT id, data -> 'people' FROM params WHERE data ->> 'country'IN ('usa') ";
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+$query = "SELECT id, data -> 'people' FROM params WHERE data ->> 'country' IN ('usa') ";
+$result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());
 
-echo "<br> results <br>";
 // Printing results in HTML
-echo "<table>\n";
-while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
+echo "<table class='table table-dark table-striped' border='1'>";
+echo "<thead><tr><th scope='col'>id</th><th scope='col'>data</th></tr></thead>";
+echo "<tbody>";
+
+// get all records 
+$lines = pg_fetch_all($result);
+foreach ($lines as $line) {
+
+    // get each record one by one
+    // while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    echo "<tr>";
+    foreach ($line as $i => $col_value) {
+        $scope = '';
+        if ($i == 'id') {
+            $scope = "scope='row'";
+        }
+        echo "<td $scope >$col_value</td>";
     }
-    echo "\t</tr>\n";
+    echo "</tr>";
 }
-echo "</table>\n";
+echo "</tbody>";
+echo "</table>";
 
 // Free resultset
 pg_free_result($result);
