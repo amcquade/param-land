@@ -1,0 +1,24 @@
+name: param-store-clone
+recipe: lamp
+config:
+  webroot: .
+  php: '8.3'
+  database: postgres
+  via: apache
+  ssl: false
+  sslExpose: false
+proxy:
+  appserver:
+    - paramstore.lndo.site
+services:
+  appserver:
+    build_as_root:
+      - apt-get update && apt-get install vim -y
+      - docker-php-ext-install pgsql
+  database:
+    type: postgres
+    portforward: 54491
+    creds:
+      database: database
+      user: postgres
+      password: 
