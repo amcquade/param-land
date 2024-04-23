@@ -33,24 +33,29 @@
 
 <body>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="content">
       <h1>ParamLand</h1>
 
-      <div class="col">
-        <form class="row g-3">
-          <div class="mb-3">
+      <div class="container-sm mb-2">
+        <form class="row g-3 align-items-center mb-3">
+          <div class="col-md-2">
             <label for="param_query" class="form-label">Query</label>
+          </div>
+
+          <div class="col-md-8">
             <input name="q" type="text" class="form-control" id="param_query">
           </div>
-          <div class="col-auto">
-            <button type="submit" hx-post="api/get_param.php" hx-target='#result' class="btn btn-primary mb-3">Search</button>
+
+          <div class="col-md-2">
+            <button type="submit" hx-post="api/get_param.php" hx-target='#query-result' class="btn btn-primary">Search</button>
           </div>
-          <div id="result" class="container"></div>
         </form>
+        <div id="query-result" class="container"></div>
       </div>
 
-      <div class="col">
+      <!-- TODO: match top section -->
+      <div class="container-sm">
         <form class="row g-3">
           <div class="mb-3">
             <label for="param_query" class="form-label">Path</label>
@@ -61,16 +66,16 @@
             <input name="value" type="text" class="form-control" id="param_value">
           </div>
           <div class="col-auto">
-            <button type="submit" hx-post="api/add_param.php" hx-target='#result' class="btn btn-primary mb-3">Add</button>
+            <button type="submit" hx-post="api/add_param.php" hx-target='#add-result' class="btn btn-primary mb-3">Add</button>
           </div>
-          <div id="result" class="container"></div>
+          <div id="add-result" class="container"></div>
         </form>
       </div>
 
 
       <br>
       <p>This is a simple example of using Bootstrap and htmx together.</p>
-      <button class="btn btn-primary" hx-get="/api/psql_example.php" hx-trigger="click" hx-target="#dataContainer">Load Data</button>
+      <button type="submit" class="btn btn-primary" hx-get="/api/psql_example.php" hx-trigger="click" hx-target="#dataContainer">Load Data</button>
       <div id="dataContainer" class="container"></div>
     </div>
   </div>

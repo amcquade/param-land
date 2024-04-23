@@ -1,7 +1,7 @@
 name: param-store-clone
 recipe: lamp
 config:
-  webroot: .
+  webroot: . 
   php: '8.3'
   database: postgres
   via: apache
