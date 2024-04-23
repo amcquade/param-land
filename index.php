@@ -33,9 +33,25 @@
 
 <body>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="content">
       <h1>ParamLand</h1>
+
+      <div class="col">
+        <form class="row g-3">
+          <div class="mb-3">
+            <label for="param_query" class="form-label">Query</label>
+            <input name="q" type="text" class="form-control" id="param_query">
+          </div>
+          <div class="col-auto">
+            <button type="submit" hx-post="api/add_param.php" hx-target='#result' class="btn btn-primary mb-3">Search</button>
+          </div>
+          <div id="result" class="container"></div>
+        </form>
+      </div>
+
+
+      <br>
       <p>This is a simple example of using Bootstrap and htmx together.</p>
       <button class="btn btn-primary" hx-get="/api/psql_example.php" hx-trigger="click" hx-target="#dataContainer">Load Data</button>
       <div id="dataContainer" class="container"></div>
