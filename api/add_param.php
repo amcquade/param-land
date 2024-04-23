@@ -1,13 +1,22 @@
 <?php
 
-if (isset($_POST['q']) && !empty($_POST['q'])) {
+if (isset($_POST['path']) && !empty($_POST['path']) && isset($_POST['value']) && !empty($_POST['value'])) {
     require_once dirname(dirname(__FILE__)) . '/includes/connection.php';
+    require_once dirname(dirname(__FILE__)) . '/includes/functions.php';
 
-    // Performing SQL query
-    $query = "SELECT id, data -> 'people' FROM params WHERE data ->> 'country' IN ('" . $_POST['q'] . "') ";
+    // TODO: refactor this ?
+    $query = "INSERT INTO params (
+        data, value) VALUES (
+        '{
+          \"full_path\": \"{$_POST['path']}\"
+        }'::jsonb, '{$_POST['value']}'::character varying)
+         returning id;";
+
     $result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());
-    $lines = pg_fetch_all($result);
-    var_dump($lines);
+
+    if (!empty($result)) {
+        echo "Insert success: {$_POST['path']} => {$_POST['value']} ";
+    }
 } else {
     echo "invalid request :(";
 }

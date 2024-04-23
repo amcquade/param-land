@@ -44,7 +44,24 @@
             <input name="q" type="text" class="form-control" id="param_query">
           </div>
           <div class="col-auto">
-            <button type="submit" hx-post="api/add_param.php" hx-target='#result' class="btn btn-primary mb-3">Search</button>
+            <button type="submit" hx-post="api/get_param.php" hx-target='#result' class="btn btn-primary mb-3">Search</button>
+          </div>
+          <div id="result" class="container"></div>
+        </form>
+      </div>
+
+      <div class="col">
+        <form class="row g-3">
+          <div class="mb-3">
+            <label for="param_query" class="form-label">Path</label>
+            <input name="path" type="text" class="form-control" id="param_query">
+          </div>
+          <div class="mb-3">
+            <label for="param_value" class="form-label">Value</label>
+            <input name="value" type="text" class="form-control" id="param_value">
+          </div>
+          <div class="col-auto">
+            <button type="submit" hx-post="api/add_param.php" hx-target='#result' class="btn btn-primary mb-3">Add</button>
           </div>
           <div id="result" class="container"></div>
         </form>
